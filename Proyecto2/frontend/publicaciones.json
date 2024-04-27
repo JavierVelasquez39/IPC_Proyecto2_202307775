@@ -1,0 +1,14 @@
+[
+    {
+        "codigo": 202000001,
+        "description": "Buenos días grupo",
+        "category": "Variedad",
+        "anonymous": false
+    },
+    {
+        "codigo": 202000125,
+        "description": "Pasen memes",
+        "category": "Divertido",
+        "anonymous": true
+    }
+]

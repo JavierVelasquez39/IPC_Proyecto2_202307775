@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import React from 'react';
+import React, { useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 import useUserStore from "../hooks/userStore";
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Container = styled.div`
   display: flex;
@@ -46,8 +46,22 @@ const Error = styled.p`
   color: red;
 `;
 
-const Success = styled.p` // Nuevo componente para el mensaje de éxito
+// Aquí defines la animación de la entrada
+const slideIn = keyframes`
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+// Aquí defines el componente SuccessMessage con la animación
+const SuccessMessage = styled.p`
   color: green;
+  animation: ${slideIn} 0.5s ease-in-out;
 `;
 
 export default function NuevoForo({ setPosts }) {
@@ -56,11 +70,9 @@ export default function NuevoForo({ setPosts }) {
     const [image, setImage] = useState(null);
     const [anonymous, setAnonymous] = useState(false);
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null); // Nuevo estado para el mensaje de éxito
-
-    // Usa useUserStore para obtener el estado del usuario
+    const [success, setSuccess] = useState(null);
     const user = useUserStore();
-    const navigate = useNavigate(); // Crea una instancia de navigate
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -78,8 +90,6 @@ export default function NuevoForo({ setPosts }) {
             anonymous,
         };
 
-        console.log(body);
-
         try {
             const response = await fetch('http://localhost:3000/api/create', {
                 method: 'POST',
@@ -96,16 +106,22 @@ export default function NuevoForo({ setPosts }) {
 
             const newPost = await response.json();
 
-            setSuccess('Post creado con éxito'); // Muestra el mensaje de éxito
-            setTimeout(() => {
-                setSuccess(null); // Limpia el mensaje después de 2 segundos
-                navigate('/foro'); // Redirige al usuario después de 2 segundos
-            }, 2000);
+            setPosts(prevPosts => [...prevPosts, newPost]);
+            setSuccess('Post creado con éxito');
 
+            Swal.fire({
+                title: "¡Post creado con éxito!",
+                text: "",
+                icon: "success",
+                timer: 5000,
+                showConfirmButton: false,
+            }).then(() => {
+                navigate('/foro');
+            });
         } catch (error) {
-            // No hagas nada aquí para que no se muestre el error
+            setError(error.message);
         }
-    };  
+    };
 
     return (
         <Container>
@@ -124,8 +140,9 @@ export default function NuevoForo({ setPosts }) {
                     <Input type="checkbox" checked={anonymous} onChange={(e) => setAnonymous(e.target.checked)} />
                 </label>
                 <Button type="submit">Publicar</Button>
-                {success && <Success>{success}</Success>} {/* Muestra el mensaje de éxito */}
+                {success && <SuccessMessage>{success}</SuccessMessage>}
             </Form>
         </Container>
     );
 }
+

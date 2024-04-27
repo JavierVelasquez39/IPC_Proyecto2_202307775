@@ -2,7 +2,7 @@ import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-or
 import { useState } from "react";
 
 export default function Post({ name, email, text, category, image }) {
-  const [isFollowed, setIsFollowed] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   return (
     <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5">
@@ -11,24 +11,25 @@ export default function Post({ name, email, text, category, image }) {
           <div className="flex gap-5">
             <Avatar isBordered radius="full" size="md" src={image || "/avatars/avatar-1.png"} />
             <div className="flex flex-col gap-1 items-start justify-center">
-              <h4 className="text-small font-semibold leading-none text-default-600">{name}</h4>
-              <h5 className="text-small tracking-tight text-default-400">{email}</h5>
+              <h4 className="text-small font-semibold leading-none text-default-600">{name}María</h4>
+              <h5 className="text-small tracking-tight text-default-400">{email}maria@gmail.com</h5>
+              <h6 className="text-small tracking-tight text-default-300">{email}Ingeniería en Sistemas</h6>
             </div>
           </div>
           <Button
-            className={isFollowed ? "bg-transparent text-foreground border-default-200" : ""}
-            color="primary"
-            radius="full"
-            size="sm"
-            variant={isFollowed ? "bordered" : "solid"}
-            onPress={() => setIsFollowed(!isFollowed)}
-          >
-            {isFollowed ? "Unfollow" : "Follow"}
-          </Button>
+          className={isLiked ? "bg-transparent text-foreground border-default-200" : ""}
+          color="primary"
+          radius="full"
+          size="sm"
+          variant={isLiked ? "bordered" : "solid"}
+          onPress={() => setIsLiked(!isLiked)}
+        >
+          {isLiked ? "Dislike" : "Like"}
+        </Button>
         </CardHeader> 
         <CardBody className="px-3 py-0 text-small text-default-400">
           <p>
-            {text}
+            Pasen imágenes graciosas. 
           </p>
           <span className="pt-2">
             #{category} 

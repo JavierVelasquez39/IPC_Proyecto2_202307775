@@ -1,6 +1,6 @@
 import { user } from "@nextui-org/react";
 
-let posts = [
+export let posts = [
     {
         id: 1,
         description: "Descripción del post",
@@ -25,6 +25,22 @@ let posts = [
         text: "Este es un nuevo post."
     }
 ]
+
+posts = posts.map(post => ({
+    user: {
+        nombres: post.name,
+        apellidos: post.apellidos,
+        carrera: post.carrera,
+        facultad: post.facultad,
+        anonymous: post.anonymous,
+    },
+    category: post.category,
+    description: post.description,
+    image: post.image,
+    createdAt: post.timestamp ? post.timestamp.toISOString() : null,
+    likes: [], // Necesitas agregar los likes en tus datos actuales
+    comments: [], // Necesitas agregar los comentarios en tus datos actuales
+}));
 
 export const getPosts = (req, res) => {
     return res.status(200).json(posts);

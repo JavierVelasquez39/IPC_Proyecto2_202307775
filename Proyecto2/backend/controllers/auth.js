@@ -1,19 +1,19 @@
 let users = [
     {
       id: 1,
-      codigo: "12345678",
-      name: "Javier Andres",
-      apellidos: "Velasquez",
+      codigo: "12024",
+      name: "Rodrigo",
+      apellidos: "Porón",
       genero: "Masculino",
       facultad: "Ingeniería",
       carrera: "Ingeniería en Sistemas",
-      email: "javierandresvelasquez36@gmail.com",
-      password: "123456",
+      email: "ipc11s2024@email.com",
+      password: "@dminIPC1",
       type: "admin",
     },
     {
       id: 2,
-      codigo: "87654321",
+      codigo: "2023005",
       name: "Usuario",
       apellidos: "Prueba",
       genero: "Femenino",
@@ -29,13 +29,13 @@ let users = [
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 export const login = (req, res) => {
-    const { email, password } = req.body;
+  const { codigo, password } = req.body;
 
-    const user = users.find(user => user?.email === email && user.password === password);
+  const user = users.find(user => user?.codigo === codigo && user.password === password);
 
-    if (!user) {
-        return res.status(401).json({ message: "Invalid credentials" });
-    }
+  if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+  }
 
     return res.status(200).json({ message: "Login successful", type: user?.type, name: user?.name,});
 }

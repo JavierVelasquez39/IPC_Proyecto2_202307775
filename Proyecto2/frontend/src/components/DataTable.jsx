@@ -17,7 +17,7 @@ export default function DataTable ({ data }) {
             {data?.map((user) => (
                 <TableRow key={user?.codigo}>
                     <TableCell>{user.codigo}</TableCell>
-                    <TableCell>{user?.nombres}</TableCell>
+                    <TableCell>{user?.name}</TableCell>
                     <TableCell>{user?.apellidos}</TableCell>
                     <TableCell>{user?.genero}</TableCell>
                     <TableCell>{user?.facultad}</TableCell>

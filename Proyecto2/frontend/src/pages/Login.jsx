@@ -72,12 +72,12 @@ export default function Login() {
                  className="flex gap-8 justify-center items-center"    
                 >
                     <Input 
-                    type="email"
-                    label="Correo Electrónico"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange} 
-                    autoComplete="off"
+                        type="number"
+                        label="Código"
+                        name="codigo"
+                        value={formData.codigo}
+                        onChange={handleChange} 
+                        autoComplete="off"
                     />
                     <Input
                     type="password"
