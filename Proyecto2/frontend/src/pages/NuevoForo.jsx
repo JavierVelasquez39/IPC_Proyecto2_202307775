@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import React from 'react';
-
+import useUserStore from "../hooks/userStore";
 
 const Container = styled.div`
   display: flex;
@@ -51,36 +51,18 @@ export default function NuevoForo({ setPosts }) {
     const [image, setImage] = useState(null);
     const [anonymous, setAnonymous] = useState(false);
     const [error, setError] = useState(null);
-    const [user, setUser] = useState(null);
 
-    useEffect(() => {
-    const fetchUser = async () => {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3000/api/users/bulk', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                description,
-                category,
-                image,
-                anonymous,
-            }),
-        });
-
-        const data = await response.json();
-
-        setUser(data.user);
-    };
-
-    fetchUser();
-}, []);
+    // Usa useUserStore para obtener el estado del usuario
+    const user = useUserStore();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
+        if (!user) {
+            setError('User not loaded');
+            return;
+        }
+
         const body = {
             description,
             userCode: user.codigo,
@@ -88,25 +70,25 @@ export default function NuevoForo({ setPosts }) {
             image, 
             anonymous,
         };
-    
+
         console.log(body);
-    
+
         try {
-            const response = await fetch('http://localhost:3000/api/posts/create', {
+            const response = await fetch('http://localhost:3000/api/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body),
             });
-    
+
             if (!response.ok) {
                 const data = await response.json();
                 throw new Error(data.message);
             }
-    
+
             const newPost = await response.json();
-    
+
             setPosts(prevPosts => [...prevPosts, newPost]);
         } catch (error) {
             setError(error.message);

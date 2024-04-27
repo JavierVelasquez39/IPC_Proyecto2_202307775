@@ -2,22 +2,23 @@ import express from 'express';
 import bodyParser from "body-parser";
 import authRoutes from './routes/auth.js';
 import postRoutes from './routes/posts.js';
-import userRoutes from './routes/userRoutes.js'; // Importa userRoutes
+import userRoutes from './routes/userRoutes.js';
 import cors from 'cors';
+import { createPost } from './controllers/posts.js';
 
 const app = express();
 
 // Middleware bodyParser
-app.use(bodyParser.json()); // para peticiones apllication/json
+app.use(bodyParser.json());
 
 // Middleware cors
 app.use(cors());    
 
-app.use("/api/auth", authRoutes); // http://localhost:3000/api/auth/login, http://localhost:3000/api/auth/user
-app.use("/api/posts", postRoutes); // http://localhost:3000/api/posts/get
-app.use("/api/register", authRoutes); // http://localhost:3000/api/register
-app.use("/api/create", postRoutes); // http://localhost:3000/api/create
-app.use("/api/users", userRoutes); // http://localhost:3000/api/users/bulk
+app.use("/api/auth", authRoutes);
+app.post("/api/create", createPost); // http://localhost:3000/api/create
+app.use("/api/posts", postRoutes);
+app.use("/api/register", authRoutes);
+app.use("/api/users", userRoutes);
 
 const PORT = 3000;
 

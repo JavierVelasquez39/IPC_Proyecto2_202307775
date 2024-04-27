@@ -1,4 +1,4 @@
-import { user } from "@nextui-org/react";
+// createPost.js
 
 let posts = [
     {
@@ -24,22 +24,7 @@ let posts = [
         email: "rodriporon2@gmail.com",
         text: "Este es un nuevo post."
     }
-]
-
-export const getPosts = (req, res) => {
-    return res.status(200).json(posts);
-}
-
-export const getPostsById = (req, res) => {
-    const { id } = req.params;
-    const post = posts.find(post => post.id === parseInt(id));
-
-    if (!post) {
-        return res.status(404).json({ message: "Post not found" });
-    }
-
-    return res.status(200).json(post);
-}
+];
 
 export const createPost = (req, res) => {
     const { description, userCode, category, image, anonymous } = req.body;
