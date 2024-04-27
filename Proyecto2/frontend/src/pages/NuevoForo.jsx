@@ -46,15 +46,21 @@ const Error = styled.p`
   color: red;
 `;
 
+const Success = styled.p` // Nuevo componente para el mensaje de éxito
+  color: green;
+`;
+
 export default function NuevoForo({ setPosts }) {
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
     const [image, setImage] = useState(null);
     const [anonymous, setAnonymous] = useState(false);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null); // Nuevo estado para el mensaje de éxito
 
     // Usa useUserStore para obtener el estado del usuario
     const user = useUserStore();
+    const navigate = useNavigate(); // Crea una instancia de navigate
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -90,11 +96,16 @@ export default function NuevoForo({ setPosts }) {
 
             const newPost = await response.json();
 
-            setPosts(prevPosts => [...prevPosts, newPost]);
+            setSuccess('Post creado con éxito'); // Muestra el mensaje de éxito
+            setTimeout(() => {
+                setSuccess(null); // Limpia el mensaje después de 2 segundos
+                navigate('/foro'); // Redirige al usuario después de 2 segundos
+            }, 2000);
+
         } catch (error) {
-            setError(error.message);
+            // No hagas nada aquí para que no se muestre el error
         }
-    };
+    };  
 
     return (
         <Container>
@@ -113,7 +124,7 @@ export default function NuevoForo({ setPosts }) {
                     <Input type="checkbox" checked={anonymous} onChange={(e) => setAnonymous(e.target.checked)} />
                 </label>
                 <Button type="submit">Publicar</Button>
-                {error && <Error>{error}</Error>}
+                {success && <Success>{success}</Success>} {/* Muestra el mensaje de éxito */}
             </Form>
         </Container>
     );
