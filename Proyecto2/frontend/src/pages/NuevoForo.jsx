@@ -46,7 +46,6 @@ const Error = styled.p`
   color: red;
 `;
 
-// Aquí defines la animación de la entrada
 const slideIn = keyframes`
   from {
     transform: translateY(100%);
@@ -58,7 +57,6 @@ const slideIn = keyframes`
   }
 `;
 
-// Aquí defines el componente SuccessMessage con la animación
 const SuccessMessage = styled.p`
   color: green;
   animation: ${slideIn} 0.5s ease-in-out;
@@ -70,7 +68,6 @@ export default function NuevoForo({ setPosts }) {
     const [image, setImage] = useState(null);
     const [anonymous, setAnonymous] = useState(false);
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
     const user = useUserStore();
     const navigate = useNavigate();
 
@@ -106,8 +103,9 @@ export default function NuevoForo({ setPosts }) {
 
             const newPost = await response.json();
 
-            setPosts(prevPosts => [...prevPosts, newPost]);
-            setSuccess('Post creado con éxito');
+            if (typeof setPosts === 'function') {
+                setPosts(prevPosts => [...prevPosts, newPost]);
+            }
 
             Swal.fire({
                 title: "¡Post creado con éxito!",
@@ -116,7 +114,9 @@ export default function NuevoForo({ setPosts }) {
                 timer: 5000,
                 showConfirmButton: false,
             }).then(() => {
-                navigate('/foro');
+                setTimeout(() => {
+                    navigate('/foro');
+                }, 2000);
             });
         } catch (error) {
             setError(error.message);
@@ -140,9 +140,8 @@ export default function NuevoForo({ setPosts }) {
                     <Input type="checkbox" checked={anonymous} onChange={(e) => setAnonymous(e.target.checked)} />
                 </label>
                 <Button type="submit">Publicar</Button>
-                {success && <SuccessMessage>{success}</SuccessMessage>}
+                {error && <Error>{error}</Error>}
             </Form>
         </Container>
     );
 }
-
