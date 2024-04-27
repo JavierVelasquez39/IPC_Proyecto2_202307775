@@ -1,5 +1,6 @@
 import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-org/react";
 import { useState } from "react";
+import NuevoForo from "../pages/NuevoForo";
 
 export default function Post({ name, email, text, category, image }) {
   const [isLiked, setIsLiked] = useState(false);

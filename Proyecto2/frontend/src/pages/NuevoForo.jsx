@@ -116,7 +116,7 @@ export default function NuevoForo({ setPosts }) {
             }).then(() => {
                 setTimeout(() => {
                     navigate('/foro');
-                }, 2000);
+                }, 500);
             });
         } catch (error) {
             setError(error.message);
