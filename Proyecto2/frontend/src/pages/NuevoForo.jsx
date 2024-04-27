@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import React from 'react';
 import useUserStore from "../hooks/userStore";
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;

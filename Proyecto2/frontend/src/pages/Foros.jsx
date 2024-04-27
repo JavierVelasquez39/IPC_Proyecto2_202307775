@@ -33,7 +33,7 @@ export default function AdminPage() {
     }
 
     return (
-        <main className="flex flex-col items-center justify-center h-screen bg-gray-900 p-4 rounded-lg gap-10">
+        <main className="flex flex-col items-center justify-center min-h-screen overflow-auto bg-gray-900 p-4 rounded-lg gap-10">
             <h1 className="text-teal-500 text-4xl font-bold">Bienvenido a USocial</h1>
             <p>Actúa con respeto y responsabilidad, ¡disfruta de este espacio!</p>
             <Button colorScheme="teal-500" variant="ghost" onClick={handleNewPost}>Crear nuevo post</Button>

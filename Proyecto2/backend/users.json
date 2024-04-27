@@ -1,6 +1,26 @@
-{
-  "description": "",
-  "category": "",
-  "image": null,
-  "anonymous": false
-}
+[
+  {
+    "id": 3,
+    "codigo": 201907775,
+    "name": "Elsa",
+    "apellidos": "Pato",
+    "genero": "Femenino",
+    "facultad": "Ciencias",
+    "carrera": "Biología",
+    "email": "elsapato@gmail.com",
+    "password": "123456",
+    "type": "user"
+  },
+  {
+    "id": 4,
+    "codigo": 202007775,
+    "name": "Manolito",
+    "apellidos": "Pies de Plata",
+    "genero": "Masculino",
+    "facultad": "Ingeniería",
+    "carrera": "Ingeniería en Sistemas",
+    "email": "manolito@gmail.com",
+    "password": "123456",
+    "type": "user"
+  }
+]
